@@ -273,12 +273,12 @@ class BST(object):
         if self.root == None:
             return None
         else:
-            if self.root.Right != None:
-                return min(self.root.Right)
+            if Node.Right != None:
+                return min(Node.Right)
             else:
                 # No right tree present
-                succesor = root # Default Value
-                curr = self.root.Left
+                succesor = None # Default Value
+                curr = self.root
                 while(curr != None):
                     if curr < Node:
                         curr = curr.Right
@@ -287,4 +287,48 @@ class BST(object):
                         curr = curr.Left
             return succesor
 
-        def findPredeccessor(self,Node):
+    def findPredeccessor(self,Node):
+        """
+        The predeccessor of a Node in a BST would be the previous largest element or largest occuring element before it
+        in an Inorder / Sorted Traversal.
+
+              x
+            /   \
+          a       z
+        /   \   /   \
+        b   c   h    k
+           / \
+          v   l
+
+        For this tree the predeccessor's for the following Nodes are:
+        1) predeccessor(x) = c
+        2) predeccessor(z) = x
+        3) predeccessor(k) = z
+        4) predeccessor(h) = x
+        5) predeccessor(a) = b
+        6) predeccessor(b) = Null / None
+
+        1) So from these examples we can see that if the node has a left Subtree then the max value of that subtree
+           would be returned as predeccessor
+
+        2) If the node is the root and it has no Left Subtree then we return Null/None.
+
+        3) If the node is not the root and it contains no Left Subtree we traverse up till we find an ancestor which is
+           a right child. if the node is not the right child.
+
+        """
+        if self.root == None:
+            return None
+        else:
+            if Node.Left != None:
+                return max(Node.Left)
+            else:
+                predeccessor = None
+                curr = self.root
+                while(curr != None):
+                    if curr < Node:
+                        predeccessor = curr
+                        curr = curr.Right
+                    else:
+                        curr = curr.Left
+            return predeccessor
